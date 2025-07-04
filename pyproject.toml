@@ -1,9 +1,13 @@
-[build-system]
-requires = [
-    "wheel",
-    "flit"
-]
-build-backend = "flit.buildapi"
+# TODO: It breaks uv installation in docker by changing
+#  `source = { virtual = "." }`
+#  to `source = { editable = "." }`
+#  in uv.lock
+#[build-system]
+#requires = [
+#    "wheel",
+#    "flit"
+#]
+#build-backend = "flit.buildapi"
 [project]
 name = "rag_battle"
 version = "0.1.0"

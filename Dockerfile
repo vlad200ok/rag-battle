@@ -85,7 +85,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv pip install pip
 
 # Copy code
-COPY rag_battle .
+COPY rag_battle rag_battle
 COPY main.py .
 
 ARG BASE_IMAGE=ubuntu:22.04

@@ -1,5 +1,8 @@
 services:
   rag-battle:
+    build:
+      args:
+        DEV_ENV: 1
     ports:
       - "${PORT}:${PORT}"
     volumes:
