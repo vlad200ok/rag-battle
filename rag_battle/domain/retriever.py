@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from rag_battle.infra.embeddings.base import BaseEmbeddingsModel
+from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
 
 
 class BaseRetriever(ABC):

@@ -1,4 +1,4 @@
-from rag_battle.infra.retrievers import BaseRetriever
+from rag_battle.domain.retriever import BaseRetriever
 
 
 class RAGService:

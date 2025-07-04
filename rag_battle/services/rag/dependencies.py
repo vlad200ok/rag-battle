@@ -1,8 +1,12 @@
 from fastapi import Depends
 
 from rag_battle.services.rag import RAGService
-from rag_battle.infra.retrievers import BaseRetriever, MockRetriever
-from rag_battle.infra.embeddings import BaseEmbeddingsModel, MockEmbeddingsModel
+
+from rag_battle.domain.retriever import BaseRetriever
+from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
+
+from rag_battle.infra.retrievers import MockRetriever
+from rag_battle.infra.embeddings import MockEmbeddingsModel
 
 
 async def get_embeddings_model() -> BaseEmbeddingsModel:

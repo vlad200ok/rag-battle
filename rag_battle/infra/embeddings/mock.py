@@ -1,4 +1,4 @@
-from rag_battle.infra.embeddings.base import BaseEmbeddingsModel
+from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
 
 
 class MockEmbeddingsModel(BaseEmbeddingsModel):
