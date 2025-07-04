@@ -1,0 +1,56 @@
+[build-system]
+requires = [
+    "wheel",
+    "flit"
+]
+build-backend = "flit.buildapi"
+[project]
+name = "rag_battle"
+version = "0.1.0"
+description = "RAG evaluation lab"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp==3.11.16",
+    "aiostream==0.6.4",
+    "alembic==1.15.2",
+    "asyncpg==0.30.0",
+    "fastapi==0.115.12",
+    "gunicorn==23.0.0",
+    "httpx==0.27.2",
+    "loguru==0.7.3",
+    "numpy==1.26.4",
+    "pgvector==0.4.0",
+    "protobuf==4.25.4",
+    "pydantic==2.10.6",
+    "python-dotenv==1.1.0",
+    "redis==5.2.1",
+    "sqlalchemy==2.0.40",
+    "uvicorn==0.34.0",
+    "uvloop==0.21.0",
+    "httptools==0.6.4",
+    "websockets==12.0.0",
+    "faiss-cpu==1.10.0",
+]
+
+# TODO: remove duplication
+# Dockefile uses `uv sync` and requires this
+[project.optional-dependencies]
+dev = [
+    "pre-commit==4.2.0",
+    "pytest==8.3.5",
+    "pytest-asyncio==0.26.0",
+    "async-asgi-testclient==1.4.11",
+]
+# uv pip install -e .[dev] requires this
+[dependency-groups]
+dev = [
+    "pre-commit==4.2.0",
+    "pytest==8.3.5",
+    "pytest-asyncio==0.26.0",
+    "async-asgi-testclient==1.4.11",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rag_battle"]

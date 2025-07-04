@@ -1,0 +1,7 @@
+services:
+  rag-battle:
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - "./rag_battle:$WORKING_DIR/rag_battle"
+      - "./main.py:$WORKING_DIR/main.py"

@@ -1,0 +1,19 @@
+services:
+  rag-battle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vlad200ok/rag-battle:${VERSION:-latest}
+    restart: unless-stopped
+    healthcheck:
+      test: curl -sS http://0.0.0.0:${PORT}/ping || exit 1
+      interval: 10s
+      timeout: 1s
+      retries: 10
+    environment:
+      PORT: $PORT
+      SERVER: $SERVER
+      RELOAD: $RELOAD
+      WORKERS: $WORKERS
+      ALEMBIC: 0
+      GUNICORN_TIMEOUT: $GUNICORN_TIMEOUT

@@ -1,0 +1,42 @@
+# Ignore Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Ignore version control
+.git/
+.gitignore
+
+# IDE/editor configs
+.idea/
+.vscode/
+
+# Docker-related files that shouldn't be inside image
+.dockerignore
+Dockerfile*
+docker-compose.yml
+docker/
+
+# Logs and OS metadata
+*.log
+*.swp
+.DS_Store
+Thumbs.db
+
+# Pre-commit & tooling
+.pre-commit-config.yaml
+.python-version
+
+# Build/test artifacts
+*.egg-info/
+.eggs/
+dist/
+build/
+.coverage
+.pytest_cache/
+
+# Sensitive or local config
+.env
+.env.*
