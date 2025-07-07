@@ -53,7 +53,8 @@ class FaissVectorDatabase(VectorDatabase, Generic[IndexType, DataItemType]):
         for i in range(len(items_with_embeddings)):
             item_with_embedding = items_with_embeddings[i]
             vector = item_with_embedding.embedding.reshape(1, -1).astype("float32")
-            item = deepcopy(item.item)
+            item = item_with_embedding.item
+            item = deepcopy(item)
 
             item_id = item.item_id
             tags = item.tags

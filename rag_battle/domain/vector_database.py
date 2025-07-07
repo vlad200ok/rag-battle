@@ -1,17 +1,19 @@
 import numpy as np
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Any
+from typing import TypeVar, Generic
 from dataclasses import dataclass
 
 
+# TODO: move to schemas
 @dataclass
 class DataItem:
     item_id: str
-    content: Any
+    content: str
     tags: list[str]
     score: float | None = None
 
 
+# TODO: move to schemas
 @dataclass
 class DataItemWithEmbedding:
     item: DataItem
