@@ -25,13 +25,13 @@ Features:
 
 ## Installation
 
-Start the project(NVIDIA GPU is required):
+Start the project(NVIDIA GPU required):
 
 ```shell
 ./run.sh
 ```
 
-Start the project in detached mode(NVIDIA GPU is required):
+Start the project in detached mode(NVIDIA GPU required):
 
 ```shell
 ./run.sh -d
