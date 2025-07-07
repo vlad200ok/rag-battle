@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import TypeVar, Generic
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
+from pydantic_settings import BaseSettings
 
 
-class EmbeddingsModelConfig(BaseModel):
+class EmbeddingsModelConfig(BaseSettings):
     """
     Base configuration for embedding models.
 

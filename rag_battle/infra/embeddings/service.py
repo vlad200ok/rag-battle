@@ -1,13 +1,20 @@
-import os
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
-from pydantic import BaseModel
 
-
-class Service(BaseModel):
+class Service(BaseSettings):
     host: str
     port: int
 
 
 class TEIService(Service):
-    host: str = os.getenv("EMBEDDINGS_HOST")
-    port: int = int(os.getenv("EMBEDDINGS_PORT"))
+    host: str = Field(
+        default=None,
+        validation_alias="EMBEDDINGS_HOST",
+        description="Text embeddings inference service host name or IP address.",
+    )
+    port: int = Field(
+        default=None,
+        validation_alias="EMBEDDINGS_PORT",
+        description="Text embeddings inference service port number.",
+    )

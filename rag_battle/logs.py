@@ -1,4 +1,3 @@
-import os
 import sys
 from loguru import logger
 from typing import TypeVar
@@ -13,7 +12,6 @@ try:
 except ImportError:
     trace = None
 
-DETAILED_LOGS = bool(int(os.getenv("DETAILED_LOGS", "0")))
 logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
 
 
