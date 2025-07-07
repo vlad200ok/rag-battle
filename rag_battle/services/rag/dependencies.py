@@ -8,10 +8,14 @@ from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
 from rag_battle.infra.retrievers import MockRetriever
 from rag_battle.infra.embeddings import TEIEmbeddingsModel
 from rag_battle.infra.embeddings.service import TEIService
+from rag_battle.infra.embeddings.tei import TEIEmbeddingsModelConfig
 
 
 async def get_embeddings_model() -> BaseEmbeddingsModel:
-    return TEIEmbeddingsModel(service=TEIService())
+    return TEIEmbeddingsModel(
+        service=TEIService(),
+        config=TEIEmbeddingsModelConfig(),
+    )
 
 
 async def get_retriever(
