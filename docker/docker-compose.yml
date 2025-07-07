@@ -24,7 +24,7 @@ services:
   embeddings-model:
     build:
       context: .
-      dockerfile: Dockerfile-tei
+      dockerfile: docker/Dockerfile-tei
     image: vlad200ok/embeddings-model:${VERSION:-latest}
     environment:
       - CUDA_VISIBLE_DEVICES=0
