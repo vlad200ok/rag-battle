@@ -19,7 +19,6 @@ class DataItem:
     score: float | None = None
 
 
-# TODO: move to schemas
 @dataclass
 class DataItemWithEmbedding:
     item: DataItem
