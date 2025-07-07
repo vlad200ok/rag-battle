@@ -55,6 +55,7 @@ class TEIEmbeddingsModel(BaseEmbeddingsModel[TEIEmbeddingsModelConfig]):
         )
         end_time = time.time()
         logger.info(
-            f"{len(texts)} embeddings calculating time: {end_time - start_time:.3f} s."
+            f"TEI: {len(texts)} embeddings calculating time: "
+            f"{end_time - start_time:.3f} s."
         )
         return embeddings.tolist()
