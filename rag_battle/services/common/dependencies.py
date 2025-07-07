@@ -13,7 +13,7 @@ async def get_embeddings_model() -> BaseEmbeddingsModel:
     )
 
 
-# TODO: create better init
+# TODO: make a better init
 VECTOR_DATABASE = FaissVectorDatabase(
     embedding_size=TEIEmbeddingsModelConfig().embedding_size
 )
