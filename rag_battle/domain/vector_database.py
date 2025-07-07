@@ -1,29 +1,7 @@
 import numpy as np
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic
-from dataclasses import dataclass
-
-
-# TODO: move to schemas
-@dataclass
-class DataItem:
-    item_id: str
-    content: str
-    tags: list[str]
-    score: float | None = None
-
-
-# TODO: move to schemas
-@dataclass
-class DataItemWithEmbedding:
-    item: DataItem
-    embedding: np.ndarray
-
-
-DataItemType = TypeVar("DataItemType", bound=DataItem)
-DataItemWithEmbeddingType = TypeVar(
-    "DataItemWithEmbeddingType", bound=DataItemWithEmbedding
-)
+from typing import Generic
+from rag_battle.domain.schemas import DataItemType, DataItemWithEmbeddingType
 
 
 class VectorDatabase(Generic[DataItemType], ABC):

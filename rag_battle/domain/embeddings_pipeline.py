@@ -2,7 +2,7 @@ import numpy as np
 
 from rag_battle.domain.vector_database import VectorDatabase
 from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
-from rag_battle.domain.vector_database import DataItemType, DataItemWithEmbedding
+from rag_battle.domain.schemas import DataItemType, DataItemWithEmbedding
 
 
 class EmbeddingsPipeline:

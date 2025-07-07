@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends
 
 from rag_battle.routers import schemas
-from rag_battle.domain.schemas import RAGQuery
-from rag_battle.domain.vector_database import DataItem
+from rag_battle.domain.schemas import RAGQuery, DataItem
 from rag_battle.services.rag import RAGService, get_rag_service
 from rag_battle.services.ingestion import (
     DocumentIngestionService,
