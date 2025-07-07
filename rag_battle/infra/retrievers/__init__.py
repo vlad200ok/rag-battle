@@ -1,5 +1,5 @@
-from rag_battle.infra.retrievers.mock import MockRetriever
+from rag_battle.infra.retrievers.retriever import Retriever
 
 __all__ = [
-    "MockRetriever",
+    "Retriever",
 ]

@@ -1,7 +1,8 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 
-class RAGQueryDTO(BaseModel):
+@dataclass
+class RAGQuery:
     query: str
     tags: list[str]
     num_items: int
