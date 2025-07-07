@@ -17,3 +17,27 @@ services:
       WORKERS: $WORKERS
       ALEMBIC: 0
       GUNICORN_TIMEOUT: $GUNICORN_TIMEOUT
+      EMBEDDINGS_HOST: $EMBEDDINGS_HOST
+      EMBEDDINGS_PORT: $EMBEDDINGS_PORT
+  embeddings-model:
+    build:
+      context: .
+      dockerfile: Dockerfile-tei
+    image: vlad200ok/embeddings-model:${VERSION:-latest}
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - OMP_NUM_THREADS=1
+    volumes:
+      - "${MODEL_CACHE_DIR}/${EMBEDDINGS_MODEL}:/data/${EMBEDDINGS_MODEL}"
+    restart: unless-stopped
+    healthcheck:
+      test: grpcurl -plaintext 0.0.0.0:${EMBEDDINGS_PORT} tei.v1.Info/Info
+      interval: 10s
+      timeout: 1s
+      retries: 10
+    runtime: nvidia
+    command: >
+      bash -c "text-embeddings-router
+      --model-id /data/$EMBEDDINGS_MODEL
+      --port $EMBEDDINGS_PORT
+      --dtype float16"
