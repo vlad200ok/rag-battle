@@ -25,6 +25,20 @@ Features:
 
 ## Installation
 
+Start the project(NVIDIA GPU is required):
+
+```shell
+./run.sh
+```
+
+Start the project in detached mode(NVIDIA GPU is required):
+
+```shell
+./run.sh -d
+```
+
+Open Swagger [http://localhost:8080/docs](http://localhost:8080/docs)
+
 TODO: add installation details
 
 ### UV installation
