@@ -98,6 +98,9 @@ class FaissVectorDatabase(VectorDatabase, Generic[IndexType, DataItemType]):
         num_items: int,
         remove_duplicates: bool,
     ) -> list[DataItemType]:
+        if num_items <= 0:
+            return []
+
         tags = list(set(tags))
 
         score_item_ids: list[ScoreItem] = []
