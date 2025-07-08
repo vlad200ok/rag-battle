@@ -1,28 +1,55 @@
-import os
 import sys
 import uvloop
 import uvicorn
 import subprocess
 from loguru import logger
 from typing import Literal
-from pydantic import BaseModel
+from pydantic import Field
+from pydantic_settings import BaseSettings
 
 uvloop.install()
 
 
-# TODO: change to BaseSettings
-class ServerConfig(BaseModel):
-    port: int = int(os.getenv("PORT"))
+class ServerConfig(BaseSettings):
+    port: int = Field(
+        default=None,
+        validation_alias="PORT",
+        description="Server port.",
+    )
     server: Literal[
         "uvicorn",
         "gunicorn",
         "opentelemetry",
-    ] = os.getenv("SERVER")
-    alembic: bool = bool(int(os.getenv("ALEMBIC", 0)))
-    reload: bool = bool(int(os.getenv("RELOAD")))
-    workers: int = int(os.getenv("WORKERS"))
-    gunicorn_timeout: int = int(os.getenv("GUNICORN_TIMEOUT"))
-    timeout_keep_alive: int = int(os.getenv("TIMEOUT_KEEP_ALIVE", 600))
+    ] = Field(
+        default=None,
+        validation_alias="SERVER",
+        description="Server type. One of uvicorn, gunicorn, opentelemetry.",
+    )
+    alembic: bool = Field(
+        default=None,
+        validation_alias="ALEMBIC",
+        description="Whether or not to run alembic migrations.",
+    )
+    reload: bool = Field(
+        default=None,
+        validation_alias="RELOAD",
+        description="Whether or not to reload the server on code changes.",
+    )
+    workers: int = Field(
+        default=None,
+        validation_alias="WORKERS",
+        description="Number of workers to use for the server.",
+    )
+    gunicorn_timeout: int = Field(
+        default=None,
+        validation_alias="GUNICORN_TIMEOUT",
+        description="Timeout for gunicorn.",
+    )
+    timeout_keep_alive: int = Field(
+        default=600,
+        validation_alias="TIMEOUT_KEEP_ALIVE",
+        description="Timeout for keep alive connections.",
+    )
 
 
 def run_alembic_migrations(path: str | None = None):
@@ -46,8 +73,11 @@ def main(
             app_path = f"{root_path}.server:app"
     else:
         app_path = "server:app"
+
     if config is None:
         config = ServerConfig()
+    logger.info(f"ServerConfig: {config}")
+
     if config.alembic:
         run_alembic_migrations(alembic_path)
 
