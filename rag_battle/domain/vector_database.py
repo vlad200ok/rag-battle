@@ -40,7 +40,7 @@ class VectorDatabase(Generic[DataItemType], ABC):
         """
         Query the vector database for items similar to the provided embeddings.
 
-        :param items_with_embeddings: The vector representations of the query.
+        :param query_embeddings: The vector representations of the query.
         :param tags: Tags to filter documents by.
         :param num_items: Maximum number of items to return.
         :param remove_duplicates: Whether to remove duplicate results.
