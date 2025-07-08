@@ -1,4 +1,5 @@
 import pytest
+import fastapi
 from httpx import AsyncClient
 
 from rag_battle.server import app
@@ -29,7 +30,7 @@ async def test_empty_database(
                     "remove_duplicates": remove_duplicates,
                 },
             )
-            assert response.status_code == 200
+            assert response.status_code == fastapi.status.HTTP_200_OK
             assert response.json() == {"items": []}
 
 
@@ -43,7 +44,7 @@ async def test_empty_ingestion() -> None:
                     "documents": [],
                 },
             )
-            assert response.status_code == 204
+            assert response.status_code == fastapi.status.HTTP_204_NO_CONTENT
             assert response.content == b""
 
 
@@ -59,7 +60,7 @@ async def test_ingestion(documents: list[dict]) -> None:
                     "documents": documents,
                 },
             )
-            assert response.status_code == 204
+            assert response.status_code == fastapi.status.HTTP_204_NO_CONTENT
             assert response.content == b""
 
             # Test to ensure that each document was saved.
@@ -75,7 +76,7 @@ async def test_ingestion(documents: list[dict]) -> None:
                     "remove_duplicates": True,
                 },
             )
-            assert response.status_code == 200
+            assert response.status_code == fastapi.status.HTTP_200_OK
             extracted = response.json()
 
             extracted_items = extracted["items"]
