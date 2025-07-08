@@ -48,9 +48,7 @@ class BaseEmbeddingsModel(Generic[EmbeddingsModelConfigType], ABC):
         """
         Generate embeddings for query texts.
 
-        This method is optimized for embedding search queries, which may have
-        different requirements than document embeddings (e.g., different model,
-        different pooling strategy, or preprocessing).
+        This method should be used for embedding search queries.
 
         :param texts: List of query texts to embed.
 
@@ -64,8 +62,7 @@ class BaseEmbeddingsModel(Generic[EmbeddingsModelConfigType], ABC):
         """
         Generate embeddings for document texts.
 
-        This method is optimized for embedding documents for storage in the vector
-        database. It may use different parameters or approaches than query embedding.
+        This method should be used for embedding documents.
 
         :param texts: List of document texts to embed.
 

@@ -23,6 +23,8 @@ Features:
 
 🔹 REST API for triggering queries and collecting metrics
 
+## Architecture: [miro.com](https://miro.com/app/board/uXjVIgGXawc=/?share_link_id=889172266608)
+
 ## Installation
 
 Start the project(NVIDIA GPU required):
