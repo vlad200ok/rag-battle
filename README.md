@@ -43,6 +43,12 @@ Open Swagger [http://localhost:8080/docs](http://localhost:8080/docs)
 
 TODO: add installation details
 
+## Tests
+
+```shell
+docker exec -it rag-battle-rag-battle-1 python -m pytest
+```
+
 ### UV installation
 
 You can install UV in one of the following ways:

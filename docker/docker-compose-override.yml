@@ -8,3 +8,5 @@ services:
     volumes:
       - "./rag_battle:$WORKING_DIR/rag_battle"
       - "./main.py:$WORKING_DIR/main.py"
+      - "./tests:$WORKING_DIR/tests"
+      - "./pytest.ini:$WORKING_DIR/pytest.ini"
