@@ -1,4 +1,5 @@
 from rag_battle.domain.embeddings_model import BaseEmbeddingsModel
+from rag_battle.domain.vector_database import VectorDatabase
 
 from rag_battle.infra.vector_database import FaissVectorDatabase
 from rag_battle.infra.embeddings import TEIEmbeddingsModel
@@ -13,7 +14,10 @@ async def get_embeddings_model() -> BaseEmbeddingsModel:
     )
 
 
-# TODO: make a better init
-VECTOR_DATABASE = FaissVectorDatabase(
-    embedding_size=TEIEmbeddingsModelConfig().embedding_size
-)
+def create_vector_database() -> VectorDatabase:
+    return FaissVectorDatabase(
+        embedding_size=TEIEmbeddingsModelConfig().embedding_size,
+    )
+
+
+VECTOR_DATABASE = create_vector_database()
