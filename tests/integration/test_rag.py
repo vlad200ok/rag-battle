@@ -83,3 +83,44 @@ async def test_ingestion(documents: list[dict]) -> None:
             for item in extracted_items:
                 print(item)
             assert len(extracted_items) == len(documents)
+
+
+@pytest.mark.asyncio(scope="session")
+@pytest.mark.parametrize("documents", DOCUMENTS)
+async def test_tags_query(documents: list[dict]) -> None:
+    async for _ in override_dependencies(app):
+        async with AsyncClient(app=app, base_url="http://test") as client:
+            # Ingest
+            response = await client.put(
+                "/v1/",
+                json={
+                    "documents": documents,
+                },
+            )
+            assert response.status_code == fastapi.status.HTTP_204_NO_CONTENT
+            assert response.content == b""
+
+            # Test tags
+            tags: dict[str, list[dict]] = {}
+            for document in documents:
+                for tag in document["tags"]:
+                    if tag not in tags:
+                        tags[tag] = []
+                    tags[tag].append(document)
+
+            for tag in tags:
+                response = await client.post(
+                    "/v1/query",
+                    json={
+                        "query": "",
+                        "tags": [tag],
+                        "num_items": len(documents) * 100,  # very big number
+                        "remove_duplicates": True,
+                    },
+                )
+                assert response.status_code == fastapi.status.HTTP_200_OK
+                extracted = response.json()
+                extracted_items = extracted["items"]
+                assert len(extracted_items) == len(tags[tag])
+                for item in extracted_items:
+                    assert tag in item["tags"]
