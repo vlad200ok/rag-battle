@@ -75,7 +75,6 @@ uv lock --upgrade
 ## Pre-commit hooks
 
 I use pre-commit hooks for black.
-To use the hooks, you need to install the library with its development dependencies.
 
 ### Re-initialize hooks
 
