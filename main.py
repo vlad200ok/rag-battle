@@ -1,10 +1,13 @@
 import os
 import sys
+import uvloop
 import uvicorn
 import subprocess
 from loguru import logger
 from typing import Literal
 from pydantic import BaseModel
+
+uvloop.install()
 
 
 # TODO: change to BaseSettings
