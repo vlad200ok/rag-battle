@@ -1,4 +1,5 @@
 import time
+import grpc
 
 import tenacity
 from grpc import RpcError
@@ -12,6 +13,7 @@ from rag_battle.infra.embeddings.text_embeddings_inference.embedding import (
 )
 from rag_battle.infra.embeddings.service import Service
 from rag_battle.infra.embeddings.tei.config import TEIEmbeddingsModelConfig
+from rag_battle.infra.embeddings.tei.exceptions import TEIInvalidInputException
 
 
 class TEIEmbeddingsModel(BaseEmbeddingsModel[TEIEmbeddingsModelConfig]):
@@ -48,11 +50,14 @@ class TEIEmbeddingsModel(BaseEmbeddingsModel[TEIEmbeddingsModelConfig]):
     )
     async def _embed(self, texts: list[str]) -> list[list[float]]:
         start_time = time.time()
-        embeddings = await embeddings_grpc(
-            texts,
-            host=self._service.host,
-            port=self._service.port,
-        )
+        try:
+            embeddings = await embeddings_grpc(
+                texts,
+                host=self._service.host,
+                port=self._service.port,
+            )
+        except grpc.aio.AioRpcError as e:
+            raise TEIInvalidInputException(e.details())
         end_time = time.time()
         logger.info(
             f"TEI: {len(texts)} embeddings calculating time: "

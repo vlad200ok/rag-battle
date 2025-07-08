@@ -1,3 +1,6 @@
+VERY_LONG_QUERY = [
+    "hello" * 10000,
+]
 QUERY = [
     "",
     "hello",

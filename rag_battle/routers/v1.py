@@ -8,6 +8,7 @@ from rag_battle.services.ingestion import (
     DocumentIngestionService,
     get_document_ingestion_service,
 )
+from rag_battle.domain.exceptions import InvalidInputException
 
 router = APIRouter()
 
@@ -40,7 +41,18 @@ async def query_api(
     rag_service: RAGService = Depends(get_rag_service),
 ) -> schemas.RAGQueryResponseDTO:
     query = RAGQuery(**payload.model_dump())
-    items = await rag_service.query(query)
+    try:
+        items = await rag_service.query(query)
+    except InvalidInputException as e:
+        raise fastapi.HTTPException(
+            status_code=fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(e),
+        )
+    except Exception:
+        raise fastapi.HTTPException(
+            status_code=fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error during extracting relevant items.",
+        )
 
     dto_items: list[schemas.DocumentWithScoreDTO] = []
     for item in items:
@@ -90,4 +102,15 @@ async def add_documents_api(
         documents.append(
             DataItem(**item.model_dump()),
         )
-    await ingestion_service.ingest_documents(documents)
+    try:
+        await ingestion_service.ingest_documents(documents)
+    except InvalidInputException as e:
+        raise fastapi.HTTPException(
+            status_code=fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(e),
+        )
+    except Exception:
+        raise fastapi.HTTPException(
+            status_code=fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error during document ingestion.",
+        )

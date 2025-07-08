@@ -3,8 +3,8 @@ import fastapi
 from httpx import AsyncClient
 
 from rag_battle.server import app
-from fixtures.query import QUERY, TAGS, NUM_ITEMS, REMOVE_DUPLICATES
-from fixtures.documents import DOCUMENTS
+from fixtures.query import VERY_LONG_QUERY, QUERY, TAGS, NUM_ITEMS, REMOVE_DUPLICATES
+from fixtures.documents import DOCUMENTS, VERY_LONG_DOCUMENTS
 from integration.utils import override_dependencies
 
 
@@ -83,6 +83,42 @@ async def test_ingestion(documents: list[dict]) -> None:
             for item in extracted_items:
                 print(item)
             assert len(extracted_items) == len(documents)
+
+
+@pytest.mark.asyncio(scope="session")
+@pytest.mark.parametrize("documents", VERY_LONG_DOCUMENTS)
+async def test_very_long_document_ingestion(documents: list[dict]) -> None:
+    async for _ in override_dependencies(app):
+        async with AsyncClient(app=app, base_url="http://test") as client:
+            # Ingest
+            response = await client.put(
+                "/v1/",
+                json={
+                    "documents": documents,
+                },
+            )
+            assert response.status_code == fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY
+            assert response.json()["detail"]
+
+
+@pytest.mark.asyncio(scope="session")
+@pytest.mark.parametrize("query", VERY_LONG_QUERY)
+async def test_very_long_query(
+    query: str,
+) -> None:
+    async for _ in override_dependencies(app):
+        async with AsyncClient(app=app, base_url="http://test") as client:
+            response = await client.post(
+                "/v1/query",
+                json={
+                    "query": query,
+                    "tags": [],
+                    "num_items": 0,
+                    "remove_duplicates": True,
+                },
+            )
+            assert response.status_code == fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY
+            assert response.json()["detail"]
 
 
 @pytest.mark.asyncio(scope="session")

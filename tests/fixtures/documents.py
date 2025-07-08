@@ -1,3 +1,12 @@
+VERY_LONG_DOCUMENTS = [
+    [
+        {
+            "item_id": "0e556d891af44b139c34322ea21ff382",
+            "content": "Document 1." * 10000,
+            "tags": ["films", "books", "movies"],
+        },
+    ],
+]
 DOCUMENTS = [
     [
         {
